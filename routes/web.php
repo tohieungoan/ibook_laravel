@@ -43,19 +43,30 @@ Route::post('mat-khau-moi/{token}', [App\Http\Controllers\Auth\ResetPasswordCont
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home.index');
 
+Route::post('danh-muc/sapxep', [App\Http\Controllers\CategoryController::class, 'sortProduct'])->name('sortproduct');
+
 Route::get('danh-muc/{slug}-{id}', [App\Http\Controllers\CategoryController::class, 'getListProduct'])->name('get.list.product');
+
+
+Route::get('danh-muc/', [App\Http\Controllers\CategoryController::class, 'getListProductall'])->name('get.list.product.all');
+
 Route::get('san-pham/{slug}-{id}', [App\Http\Controllers\ProductDetailController::class, 'productDetail'])->name('get.detail.product');
 
 
 Route::prefix('shopping')->group(function (){
    
     Route::get('/add/{id}', [App\Http\Controllers\ShoppingCartController::class, 'addProduct'])->name('add.shopping.cart');
+    Route::get('/delete/{id}', [App\Http\Controllers\ShoppingCartController::class, 'deleteProduct'])->name('delete.shopping.cart');
+    
+
     Route::get('danh-sach', [App\Http\Controllers\ShoppingCartController::class, 'getListShoppingCart'])->name('get.list.shopping.cart');
 
 });
 
 Route::group(['prefix' => 'gio-hang', 'middleware' => 'CheckLoginUser'], function () {
     Route::get('/thanh-toan', [App\Http\Controllers\ShoppingCartController::class, 'getFormPay'])->name('get.form.pay');
+    Route::post('/thanh-toan', [App\Http\Controllers\ShoppingCartController::class, 'saveInfoShoppingCart']);
+
 });
 
 
@@ -83,6 +94,8 @@ Route::get('/dang-nhap/callback', [LoginController::class, 'handleGoogleCallback
 
 
 Route::get('/news',[App\Http\Controllers\NewController::class, 'returnview'])->name('returnview');
+Route::get('/news/{slug}-{id}',[App\Http\Controllers\NewController::class, 'detailnew'])->name('detailnew');
+
 
 Route::get('/quanlytaikhoan',[App\Http\Controllers\AccountManager::class, 'accountmanager'])->name('accountmanager');
 
@@ -92,3 +105,5 @@ Route::get('/billing',[App\Http\Controllers\AccountManager::class, 'billing'])->
 Route::post('/changepassword' ,[App\Http\Controllers\AccountManager::class, 'changepassword'] );
 
 Route::get('/DeleteAccount' , [App\Http\Controllers\AccountManager::class, 'delete'] )->name('deleteAccount');
+
+Route::post('/quanlytaikhoan',[App\Http\Controllers\AccountManager::class, 'saveprofile'])->name('saveprofile');

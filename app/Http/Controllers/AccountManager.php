@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
-use App\Http\Requests;
+use App\Models\Profile;
 use App\Models\User;
+
 use Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -19,7 +20,12 @@ class AccountManager extends FrontendController
   {
     // Lấy thông tin người dùng đăng nhập
     $user = Auth::user();
+    $userId = Auth::user()->id;
+$profile = Profile::where('id_account', $userId)->first();
+if ($profile) {
+  $user = $profile;
 
+}
     $viewData = [
       'user' => $user
     ];
@@ -65,5 +71,28 @@ class AccountManager extends FrontendController
          return Redirect::route('home.index')->with('global', 'Your account has been deleted!');
     }
     
+  }
+  public function saveprofile(Request $request){
+    $userId = Auth::user()->id;
+$profile = Profile::where('id_account', $userId)->first();
+if (!$profile) {
+  $profile = new Profile();
+  $profile->id_account = $userId;
+}
+    $profile->name = $request->name;
+    // $profile->id_account = Auth::user()->id;
+    $profile->location = $request->location;
+    $profile->note = $request->note;
+    $profile->email = $request->email;
+
+    $profile->phone = $request->phone;
+    $profile->birthdate = $request->birthday;
+    if ($request->hasFile('avatar')) {
+      $file = upload_image('avatar');
+      if (isset($file['name'])) {
+          $profile->avatar = $file['name'];
+      }
+  }
+    $profile->save();
   }
 }

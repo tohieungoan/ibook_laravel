@@ -96,7 +96,7 @@
                                                     <div class="single-product first-sale">
                                                         <span class="sale-text"
                                                             style="color: red; background-color: yellow; font-weight: bold">Sale
-                                                            : {{ $hot->pro_sale }}</span>
+                                                            : {{ $hot->pro_sale }}%</span>
 
                                                         <div class="product-img">
 
@@ -117,7 +117,7 @@
                                                             </a>
                                                             <div class="action-zoom">
                                                                 <div class="add-to-cart">
-                                                                    <a href="#" title="Quick View"><i
+                                                                    <a href="{{ route('get.detail.product', [$hot->pro_slug, $hot->id]) }}" title="Quick View"><i
                                                                             class="fa fa-search-plus"></i></a>
                                                                 </div>
                                                             </div>
@@ -141,7 +141,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="price-box">
-                                                                <span class="new-price">{{ $hot->pro_price }}
+                                                                <span class="new-price">{{ $formattedPrice = number_format($hot->pro_price, 0, '', ',') }}
                                                                     VND</span>
                                                             </div>
                                                         </div>
@@ -157,7 +157,7 @@
                                                         <div class="single-product">
                                                             <span class="sale-text"
                                                                 style="color: red; background-color: yellow; font-weight: bold">Sale
-                                                                : {{ $productHot[$key+1]->pro_sale }}</span>
+                                                                : {{ $productHot[$key+1]->pro_sale }}%</span>
                                                             <div class="product-img">
                                                                 <a href="#">
                                                                     <div
@@ -176,7 +176,7 @@
                                                                 </a>
                                                                 <div class="action-zoom">
                                                                     <div class="add-to-cart">
-                                                                        <a href="#" title="Quick View"><i
+                                                                        <a href="{{ route('get.detail.product', [$productHot[$key+1]->pro_slug, $productHot[$key+1]->id]) }}" title="Quick View"><i
                                                                                 class="fa fa-search-plus"></i></a>
                                                                     </div>
                                                                 </div>
@@ -188,7 +188,7 @@
                                                                                         class="fa fa-heart"></i></a>
                                                                             </div>
                                                                             <div class="compare-button">
-                                                                                <a href="#" title="Add to Cart"><i
+                                                                                <a href="{{ route('add.shopping.cart',$productHot[$key+1]->id) }}" title="Add to Cart"><i
                                                                                         class="icon-bag"></i></a>
                                                                             </div>
                                                                         </div>
@@ -200,7 +200,7 @@
                                                                 </div>
                                                                 <div class="price-box">
                                                                     <span
-                                                                        class="new-price">{{ $productHot[$key+1]->pro_price }}
+                                                                        class="new-price">{{ $formattedPrice = number_format($productHot[$key+1]->pro_price, 0, '', ',') }}
                                                                         VND</span>
                                                                 </div>
                                                             </div>
@@ -239,7 +239,7 @@
                                                     <div class="single-product first-sale">
                                                         <span class="sale-text"
                                                             style="color: red; background-color: yellow; font-weight: bold">Sale
-                                                            : {{ $random->pro_sale }}</span>
+                                                            : {{ $random->pro_sale }}%</span>
 
                                                         <div class="product-img">
                                                             <a href="#">
@@ -258,7 +258,7 @@
                                                             </a>
                                                             <div class="action-zoom">
                                                                 <div class="add-to-cart">
-                                                                    <a href="#" title="Quick View"><i
+                                                                    <a href="{{ route('get.detail.product', [$random->pro_slug, $random->id]) }}" title="Quick View"><i
                                                                             class="fa fa-search-plus"></i></a>
                                                                 </div>
                                                             </div>
@@ -270,7 +270,7 @@
                                                                                     class="fa fa-heart"></i></a>
                                                                         </div>
                                                                         <div class="compare-button">
-                                                                            <a href="#" title="Add to Cart"><i
+                                                                            <a href="{{ route('add.shopping.cart',$random->id) }}" title="Add to Cart"><i
                                                                                     class="icon-bag"></i></a>
                                                                         </div>
                                                                     </div>
@@ -281,7 +281,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="price-box">
-                                                                <span class="new-price">{{ $random->pro_price }}
+                                                                <span class="new-price">{{ $formattedPrice = number_format($random->pro_price, 0, '', ',') }}
                                                                     VND</span>
                                                             </div>
                                                         </div>
@@ -298,7 +298,7 @@
                                                             <span class="sale-text"
                                                                 style="color: red; background-color: yellow; font-weight: bold">Sale
                                                                 :
-                                                                {{ $productRandom[$key2+1]->pro_sale }}</span>
+                                                                {{ $productRandom[$key2+1]->pro_sale }}%</span>
 
                                                             <div class="product-img">
                                                                 <a href="#">
@@ -318,7 +318,7 @@
                                                                 </a>
                                                                 <div class="action-zoom">
                                                                     <div class="add-to-cart">
-                                                                        <a href="#" title="Quick View"><i
+                                                                        <a href="{{ route('get.detail.product', [$productRandom[$key2+1]->pro_slug, $productRandom[$key2+1]->id]) }}" title="Quick View"><i
                                                                                 class="fa fa-search-plus"></i></a>
                                                                     </div>
                                                                 </div>
@@ -330,7 +330,7 @@
                                                                                         class="fa fa-heart"></i></a>
                                                                             </div>
                                                                             <div class="compare-button">
-                                                                                <a href="#" title="Add to Cart"><i
+                                                                                <a href="{{ route('add.shopping.cart',$productRandom[$key2+1]->id) }}" title="Add to Cart"><i
                                                                                         class="icon-bag"></i></a>
                                                                             </div>
                                                                         </div>
@@ -342,7 +342,7 @@
                                                                 </div>
                                                                 <div class="price-box">
                                                                     <span
-                                                                        class="new-price">{{ $productRandom[$key2+1]->pro_price }}
+                                                                        class="new-price">{{ $formattedPrice = number_format($productRandom[$key2+1]->pro_price, 0, '', ',') }}
                                                                         VND</span>
                                                                 </div>
                                                             </div>
@@ -415,7 +415,7 @@
                                             </a>
                                             <div class="action-zoom">
                                                 <div class="add-to-cart">
-                                                    <a href="#" title="Quick View"><i class="fa fa-search-plus"></i></a>
+                                                    <a href="{{ route('get.detail.product', [$new->pro_slug, $new->id]) }}" title="Quick View"><i class="fa fa-search-plus"></i></a>
                                                 </div>
                                             </div>
                                             <div class="actions">
@@ -426,7 +426,7 @@
                                                                     class="fa fa-heart"></i></a>
                                                         </div>
                                                         <div class="compare-button">
-                                                            <a href="#" title="Add to Cart"><i class="icon-bag"></i></a>
+                                                            <a href="{{ route('add.shopping.cart',$new->id) }}" title="Add to Cart"><i class="icon-bag"></i></a>
                                                         </div>
                                                     </div>
                                                     <div class="quickviewbtn">
@@ -436,7 +436,7 @@
                                                 </div>
                                             </div>
                                             <div class="price-box">
-                                                <span class="new-price">{{ $new->pro_price }} VND</span>
+                                                <span class="new-price">{{ $formattedPrice = number_format($new->pro_price, 0, '', ',') }} VND</span>
                                             </div>
                                         </div>
                                         <div class="product-content">
@@ -488,14 +488,14 @@
                                 </div>
                                 <div class="post-thumb-info">
                                     <div class="post-time">
-                                        <a href="#">{{ $newbangtin->a_name }}</a>
+                                        <a href="{{ route('detailnew', [$newbangtin->a_slug, $newbangtin->id]) }}">{{ $newbangtin->a_name }}</a>
                                         <span>/</span>
                                         <span>Post by</span>
                                         <span>{{ $newbangtin->a_author_id }}</span>
                                     </div>
                                     <div class="postexcerpt">
                                         <p>{{ $newbangtin->a_description_seo }}</p>
-                                        <a href="#" class="read-more">Read more</a>
+                                        <a href="{{ route('detailnew', [$newbangtin->a_slug, $newbangtin->id]) }}" class="read-more">Read more</a>
                                     </div>
                                 </div>
                             </div>
@@ -514,226 +514,7 @@
     </div>
 </div>
 <!-- latestpost area end -->
-<!-- block category area start -->
-<div class="block-category">
-    <div class="container">
-        <div class="row">
-            <!-- featured block start -->
-            <div class="col-md-4">
-                <!-- block title start -->
-                <div class="block-title">
-                    <h2>Featureds</h2>
-                </div>
-                <!-- block title end -->
-                <!-- block carousel start -->
-                <div class="block-carousel">
 
-                    @if((isset($newProduct)))
-                        @foreach($newProduct as $nn)
-                            <div class="block-content">
-                                <!-- single block start -->
-                                <div class="single-block">
-                                    <div class="block-image pull-left">
-                                        <a href="product-details.html">
-                                            <div style="width: 170px; height: 208px; overflow: hidden;">
-                                                <img src="{{ pare_url_file($nn->pro_avatar) }}" alt="Image"
-                                                    style="width: 100%; height: 100%; object-fit: cover;">
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="category-info">
-                                        <h3><a href="product-details.html">Donec ac tempus</a></h3>
-                                        <p>Nunc facilisis sagittis ullamcorper...</p>
-                                        <div class="cat-price">$235.00 <span class="old-price">$333.00</span></div>
-                                        <div class="cat-rating">
-                                            <a href="#"><i class="fa fa-star"></i></a>
-                                            <a href="#"><i class="fa fa-star"></i></a>
-                                            <a href="#"><i class="fa fa-star"></i></a>
-                                            <a href="#"><i class="fa fa-star"></i></a>
-                                            <a href="#"><i class="fa fa-star"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- single block end -->
-                                <!-- single block start -->
-                                <div class="single-block">
-                                    <div class="block-image pull-left">
-                                        <a href="product-details.html">
-                                            <div style="width: 170px; height: 208px; overflow: hidden;">
-                                                <img src="{{ pare_url_file($nn->pro_avatar) }}" alt="Image"
-                                                    style="width: 100%; height: 100%; object-fit: cover;">
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="category-info">
-                                        <h3><a href="product-details.html">Primis in faucibus</a></h3>
-                                        <p>Nunc facilisis sagittis ullamcorper...</p>
-                                        <div class="cat-price">$205.00</div>
-                                        <div class="cat-rating">
-                                            <a href="#"><i class="fa fa-star"></i></a>
-                                            <a href="#"><i class="fa fa-star"></i></a>
-                                            <a href="#"><i class="fa fa-star"></i></a>
-                                            <a href="#"><i class="fa fa-star"></i></a>
-                                            <a href="#"><i class="fa fa-star"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- single block end -->
-                            </div>
-                        @endforeach
-                    @endif
-
-                </div>
-                <!-- block carousel end -->
-            </div>
-            <!-- featured block end -->
-            <!-- featured block start -->
-            <div class="col-md-4">
-                <!-- block title start -->
-                <div class="block-title">
-                    <h2>On Sales</h2>
-                </div>
-                <!-- block title end -->
-                <!-- block carousel start -->
-                <div class="block-carousel">
-                    @if((isset($newProduct)))
-                        @foreach($newProduct as $nnn)
-
-
-                            <div class="block-content">
-                                <!-- single block start -->
-                                <div class="single-block">
-                                    <div class="block-image pull-left">
-                                        <a href="product-details.html">
-                                            <div style="width: 170px; height: 208px; overflow: hidden;">
-                                                <img src="{{ pare_url_file($nnn->pro_avatar) }}" alt="Image"
-                                                    style="width: 100%; height: 100%; object-fit: cover;">
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="category-info">
-                                        <h3><a href="product-details.html">Voluptas nulla</a></h3>
-                                        <p>Nunc facilisis sagittis ullamcorper...</p>
-                                        <div class="cat-price">$99.00 <span class="old-price">$111.00</span></div>
-                                        <div class="cat-rating">
-                                            <a href="#"><i class="fa fa-star"></i></a>
-                                            <a href="#"><i class="fa fa-star"></i></a>
-                                            <a href="#"><i class="fa fa-star"></i></a>
-                                            <a href="#"><i class="fa fa-star"></i></a>
-                                            <a href="#"><i class="fa fa-star"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- single block end -->
-                                <!-- single block start -->
-                                <div class="single-block">
-                                    <div class="block-image pull-left">
-                                        <a href="product-details.html">
-                                            <div style="width: 170px; height: 208px; overflow: hidden;">
-                                                <img src="{{ pare_url_file($nnn->pro_avatar) }}" alt="Image"
-                                                    style="width: 100%; height: 100%; object-fit: cover;">
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="category-info">
-                                        <h3><a href="product-details.html">Cras neque metus</a></h3>
-                                        <p>Nunc facilisis sagittis ullamcorper...</p>
-                                        <div class="cat-price">$235.00</div>
-                                        <div class="cat-rating">
-                                            <a href="#"><i class="fa fa-star"></i></a>
-                                            <a href="#"><i class="fa fa-star"></i></a>
-                                            <a href="#"><i class="fa fa-star"></i></a>
-                                            <a href="#"><i class="fa fa-star"></i></a>
-                                            <a href="#"><i class="fa fa-star"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- single block end -->
-                            </div>
-                        @endforeach
-                    @endif
-
-
-                </div>
-                <!-- block carousel end -->
-            </div>
-            <!-- featured block end -->
-            <!-- featured block start -->
-            <div class="col-md-4">
-                <!-- block title start -->
-                <div class="block-title">
-                    <h2>Populers</h2>
-                </div>
-                <!-- block title end -->
-                <!-- block carousel start -->
-                <div class="block-carousel">
-
-
-                    @if((isset($newProduct)))
-                        @foreach($newProduct as $nnnn)
-                            <div class="block-content">
-                                <!-- single block start -->
-                                <div class="single-block">
-                                    <div class="block-image pull-left">
-                                        <a href="product-details.html">
-                                            <div style="width: 170px; height: 208px; overflow: hidden;">
-                                                <img src="{{ pare_url_file($nnnn->pro_avatar) }}" alt="Image"
-                                                    style="width: 100%; height: 100%; object-fit: cover;">
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="category-info">
-                                        <h3><a href="product-details.html">Voluptas nulla</a></h3>
-                                        <p>Nunc facilisis sagittis ullamcorper...</p>
-                                        <div class="cat-price">$99.00 <span class="old-price">$111.00</span></div>
-                                        <div class="cat-rating">
-                                            <a href="#"><i class="fa fa-star"></i></a>
-                                            <a href="#"><i class="fa fa-star"></i></a>
-                                            <a href="#"><i class="fa fa-star"></i></a>
-                                            <a href="#"><i class="fa fa-star"></i></a>
-                                            <a href="#"><i class="fa fa-star"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- single block end -->
-                                <!-- single block start -->
-                                <div class="single-block">
-                                    <div class="block-image pull-left">
-                                        <a href="product-details.html">
-                                            <div style="width: 170px; height: 208px; overflow: hidden;">
-                                                <img src="{{ pare_url_file($nnnn->pro_avatar) }}" alt="Image"
-                                                    style="width: 100%; height: 100%; object-fit: cover;">
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="category-info">
-                                        <h3><a href="product-details.html">Cras neque metus</a></h3>
-                                        <p>Nunc facilisis sagittis ullamcorper...</p>
-                                        <div class="cat-price">$235.00</div>
-                                        <div class="cat-rating">
-                                            <a href="#"><i class="fa fa-star"></i></a>
-                                            <a href="#"><i class="fa fa-star"></i></a>
-                                            <a href="#"><i class="fa fa-star"></i></a>
-                                            <a href="#"><i class="fa fa-star"></i></a>
-                                            <a href="#"><i class="fa fa-star"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- single block end -->
-                            </div>
-                        @endforeach
-                    @endif
-
-
-
-
-                </div>
-                <!-- block carousel end -->
-            </div>
-            <!-- featured block end -->
-        </div>
-    </div>
-</div>
 <!-- block category area end -->
 <!-- testimonial area start -->
 <div class="testimonial-area lap-ruffel">

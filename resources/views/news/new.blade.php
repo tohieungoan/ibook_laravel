@@ -1,6 +1,8 @@
+
 @extends('layouts.app')
 
 @section('content')
+
     <!-- Main layout -->
     <div class="container">
         @if (isset($news) && count($news) > 0)
@@ -20,19 +22,20 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6 mb-4">
+                            <div class="col-md-6 mb-4"> <a href="{{ route('detailnew', [$new->a_slug, $new->id]) }}">
                                 <span class="badge bg-danger px-2 py-1 shadow-1-strong mb-3">News of the day</span>
                                 <h4><strong>{{ $new->a_name }}</strong></h4>
                                 <p class="text-muted">
-                                    {{ $new->a_description }}
+                                    {!! \Illuminate\Support\Str::limit($new->a_content, 250, '...') !!}
                                 </p>
                                 <button type="button" class="btn btn-primary">Read more</button>
+                            </a>
                             </div>
                         </div>
                     </section>
-                @elseif(($count - 1) % 3 == 0)
+                    @elseif (($count % 3) == 0&&($count !=0))
                     <!-- Start a new row for every set of three items -->
-                    <div class="row mb-4">
+                        
                 @endif
 
                 <!-- News block -->
@@ -47,20 +50,22 @@
                     <!-- Article data -->
                     <div class="row mt-3">
                         <div class="col-6">
-                            <a href="#" class="text-info">
-                                <i class="fas fa-plane"></i>
-                                Travels
+                            <a href="{{ route('detailnew', [$new->a_slug, $new->id]) }}" class="text-info">
+                                
+                              <h5><i class="fa-solid fa-newspaper"></i>  {{ $new->a_name }}</h5>
                             </a>
                         </div>
 
                         <div class="col-6 text-end">
-                            <u> 15.07.2020</u>
+                            <?php
+                            $formatted_date = $new->created_at->format('Y-m-d');
+                        ?>
+                        <u>{{ $formatted_date }}</u>
                         </div>
                     </div>
 
                     <!-- Article title and description -->
-                    <a href="#" class="text-dark">
-                        <h5>{{ $new->a_name }}</h5>
+                    <a href="{{ route('detailnew', [$new->a_slug, $new->id]) }}" class="text-dark">
                         <p>
                             {{ $new->a_description }}
                         </p>
@@ -70,28 +75,30 @@
                 </div>
                 <!-- End News block -->
 
-                @if(($count + 1) % 3 == 0 || $count == count($news) - 1)
-                    </div><!-- Close the row after every set of three items or the last item -->
+                @if (($count + 1) % 3 == 0 || $count == count($news) - 1)
+                    {{-- </div><!-- Close the row after every set of three items or the last item --> --}}
                 @endif
             @endforeach
         @endif
-
+        <div class="col-lg-12 col-md-12 col-sm-12">
         <!-- Pagination -->
         <nav class="my-4" aria-label="...">
             <ul class="pagination pagination-circle justify-content-center">
                 <li class="page-item">
                     <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
                 </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
                 <li class="page-item active" aria-current="page">
-                    <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+                    <a class="page-link" href="#">1 <span class="sr-only">(current)</span></a>
                 </li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+               
                 <li class="page-item"><a class="page-link" href="#">3</a></li>
                 <li class="page-item">
                     <a class="page-link" href="#">Next</a>
                 </li>
             </ul>
         </nav>
+    </div>
     </div>
     <!-- Main layout -->
 @stop

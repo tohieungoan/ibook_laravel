@@ -38,10 +38,15 @@
                 <div class="card mb-4 mb-xl-0">
                     <div class="card-header">Profile Picture</div>
                     <div class="card-body text-center">
-
+                        <form action="{{ route('saveprofile') }}" method="post" enctype="multipart/form-data">
+                            @csrf
                         <!-- Profile picture image-->
-                        <img id="out_img" src="{{ asset('img/cropping.jpg') }}" style="width: 100%"
-                            height="300px" alt="">
+                        @if(isset($user->avatar))
+                        <img id="out_img" src="{{ pare_url_file($user->avatar) }}" style="width: 100%" height="300px" alt="">
+                    @else
+                        <img id="out_img" src="{{ asset('img/cropping.jpg') }}" style="width: 100%" height="300px" alt="">
+                    @endif
+                      
                         <!-- Profile picture help block-->
                         <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
                         <!-- Profile picture upload button-->
@@ -56,13 +61,13 @@
                 <div class="card mb-4">
                     <div class="card-header">Thông tin tài khoản</div>
                     <div class="card-body">
-                        <form>
+                       
                             <!-- Form Group (username)-->
                             <div class="mb-3">
                                 <label class="small mb-1" for="inputUsername">Username (Sẽ hiển thị khi bình luận hoặc
                                     mua hàng)</label>
                                 <input class="form-control" id="inputUsername" type="text"
-                                    placeholder="Enter your username" value="{{ $user->name }}">
+                                    placeholder="Enter your username" name ="name" value="{{ $user->name }}">
                             </div>
                             <!-- Form Row-->
 
@@ -92,18 +97,18 @@
 
                             <div class="mb-3">
 
-                                <input class="form-control" id="result" type="text" value="">
+                                <input class="form-control" name="location" id="result" type="text" value="{{ $user->location }}">
                             </div>
                             <div class="mb-3">
                                 <div class="form-group">
                                     <label for="Note">Note</label>
-                                    <textarea class="form-control" id="Note" rows="3"></textarea>
+                                    <textarea class="form-control" name="note" id="Note" rows="3">{{ $user->note }}</textarea>
                                 </div>
                             </div>
                             <!-- Form Group (email address)-->
                             <div class="mb-3">
                                 <label class="small mb-1" for="inputEmailAddress">Email address</label>
-                                <input class="form-control" id="inputEmailAddress" type="email"
+                                <input class="form-control" name ="email"id="inputEmailAddress" type="email"
                                     placeholder="Enter your email address" value="{{ $user->email }}">
                             </div>
                             <!-- Form Row-->
@@ -111,18 +116,18 @@
                                 <!-- Form Group (phone number)-->
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputPhone">Phone number</label>
-                                    <input class="form-control" id="inputPhone" type="tel"
+                                    <input class="form-control" name="phone" id="inputPhone" type="tel"
                                         placeholder="Enter your phone number" value="{{ $user->phone }}">
                                 </div>
                                 <!-- Form Group (birthday)-->
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputBirthday">Birthday</label>
                                     <input class="form-control" id="inputBirthday" type="date" min="1918-01-01"
-                                        max="2118-12-31" name="birthday" value="2023-11-21">
+                                        max="2118-12-31" name="birthday" value="{{ $user->birthdate }}">
                                 </div>
                             </div>
                             <!-- Save changes button-->
-                            <button class="btn btn-primary" type="button">Save changes</button>
+                            <button class="btn btn-primary" type="submit">Save changes</button>
                         </form>
                     </div>
                 </div>

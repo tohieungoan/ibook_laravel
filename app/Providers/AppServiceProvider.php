@@ -27,10 +27,10 @@ class AppServiceProvider extends ServiceProvider
         $this->composeHeader();
     }
     public function composeHeader()
-{
-    View::composer('components.header', function ($view) {
-        $categories = Category::where('c_active', Category::STATUS_PUBLIC)->get();
-        $view->with('categories', $categories);
-    });
-}
+    {
+        View::composer(['components.header', 'product.index'], function ($view) {
+            $categories = Category::where('c_active', Category::STATUS_PUBLIC)->get();
+            $view->with('categories', $categories);
+        });
+    }
 }
