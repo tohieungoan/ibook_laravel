@@ -10,7 +10,7 @@ class NewController extends FrontendController
    public function returnview () {
       $news = Article::where([
          'a_active'=>Article::STATUS_PUBLIC
-        ])->orderBy('id', 'desc')->get();
+        ])->orderBy('id', 'desc')->paginate(6);;
         $viewData = [
          'news' => $news
      ];

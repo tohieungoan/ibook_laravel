@@ -50,7 +50,7 @@
                             <h6>Categories</h6>
                         </div>
                         <ul class="sidebar-tags">
-                        
+                        <li><a href="{{ route('get.list.product.all') }}">Tất cả sản phẩm</a></li>
                             @if(isset($categories))
                             @foreach($categories as  $category)
                             <li>  <a href="{{ route('get.list.product', [$category->c_slug, $category->id]) }}">{{ $category->c_name }}</a>    </li>
@@ -67,14 +67,14 @@
                         </div>
                         <div class="exp-tags">
                             <div class="tags">
-                                <a href="#">Figure</a>
-                                <a href="#">thiếu nhi</a>
-                                <a href="#">tâm lí</a>
-                                <a href="#">trinh thám</a>
-                                <a href="#">giáo khoa</a>
-                                <a href="#">truyện tranh</a>
-                                <a href="#">tiểu thuyết</a>
-                                <a href="#">máy đọc sách</a>
+                                <a href="{{ route('get.list.product.search',['Figure']) }}">Figure</a>
+                                <a href="{{ route('get.list.product.search',['thiếu nhi']) }}">thiếu nhi</a>
+                                <a href="{{ route('get.list.product.search',['tâm lí']) }}">tâm lí</a>
+                                <a href="{{ route('get.list.product.search',['trinh thám']) }}">trinh thám</a>
+                                <a href="{{ route('get.list.product.search',['giáo khoa']) }}">giáo khoa</a>
+                                <a href="{{ route('get.list.product.search',['truyện tranh']) }}">truyện tranh</a>
+                                <a href="{{ route('get.list.product.search',['tiểu thuyết']) }}">tiểu thuyết</a>
+                                <a href="{{ route('get.list.product.search',['máy đọc sách']) }}">máy đọc sách</a>
                             </div>
                         </div>
                     </aside>

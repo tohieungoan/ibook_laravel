@@ -49,23 +49,40 @@ Route::get('danh-muc/{slug}-{id}', [App\Http\Controllers\CategoryController::cla
 
 
 Route::get('danh-muc/', [App\Http\Controllers\CategoryController::class, 'getListProductall'])->name('get.list.product.all');
+Route::get('danh-muc/search/{search}', [App\Http\Controllers\CategoryController::class, 'getListProductsearch'])->name('get.list.product.search');
 
 Route::get('san-pham/{slug}-{id}', [App\Http\Controllers\ProductDetailController::class, 'productDetail'])->name('get.detail.product');
 
 
-Route::prefix('shopping')->group(function (){
+// Route::prefix('shopping')->group(function (){
    
-    Route::get('/add/{id}', [App\Http\Controllers\ShoppingCartController::class, 'addProduct'])->name('add.shopping.cart');
-    Route::get('/delete/{id}', [App\Http\Controllers\ShoppingCartController::class, 'deleteProduct'])->name('delete.shopping.cart');
+//     // Route::get('/add/{id}', [App\Http\Controllers\ShoppingCartController::class, 'addProduct'])->name('add.shopping.cart');
+//     Route::get('/delete/{id}', [App\Http\Controllers\ShoppingCartController::class, 'deleteProduct'])->name('delete.shopping.cart');
     
 
-    Route::get('danh-sach', [App\Http\Controllers\ShoppingCartController::class, 'getListShoppingCart'])->name('get.list.shopping.cart');
+//     Route::get('danh-sach', [App\Http\Controllers\ShoppingCartController::class, 'getListShoppingCart'])->name('get.list.shopping.cart');
 
-});
+// });
 
 Route::group(['prefix' => 'gio-hang', 'middleware' => 'CheckLoginUser'], function () {
-    Route::get('/thanh-toan', [App\Http\Controllers\ShoppingCartController::class, 'getFormPay'])->name('get.form.pay');
-    Route::post('/thanh-toan', [App\Http\Controllers\ShoppingCartController::class, 'saveInfoShoppingCart']);
+    Route::get('/add/{id}', [App\Http\Controllers\ShoppingCartController::class, 'addProduct'])->name('add.shopping.cart');
+    Route::post('/thanh-toan/dat-hang', [App\Http\Controllers\ShoppingCartController::class, 'PostFormPay'])->name('post.form.pay');
+    // Route::post('/thanh-toan', [App\Http\Controllers\ShoppingCartController::class, 'saveInfoShoppingCart']);
+    Route::post('/update-quantity', [App\Http\Controllers\ShoppingCartController::class, 'updatesoluong'])->name('updatesoluong');
+
+    Route::prefix('shopping')->group(function (){
+   
+        // Route::get('/add/{id}', [App\Http\Controllers\ShoppingCartController::class, 'addProduct'])->name('add.shopping.cart');
+        Route::get('/delete/{id}', [App\Http\Controllers\ShoppingCartController::class, 'deleteProduct'])->name('delete.shopping.cart');
+        
+    
+        Route::get('danh-sach', [App\Http\Controllers\ShoppingCartController::class, 'getListShoppingCart'])->name('get.list.shopping.cart');
+
+        
+        
+
+    
+    });
 
 });
 

@@ -70,7 +70,7 @@
 										</div>
 										<div class="submit-form form-group col-sm-12 submit-review">
 											<p><sup>*</sup> Required Fields</p>
-											<button class="add-tag-btn">Gửi thông tin</button>
+											<button class="btn btn-success">Gửi thông tin</button>
 										</div>
 									</form>
 								</div>

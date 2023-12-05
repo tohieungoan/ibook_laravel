@@ -185,5 +185,7 @@
 		<script src="{{ asset('js/gmap.js') }}"></script>
 		<script src="https://kit.fontawesome.com/fbdb677fe0.js" crossorigin="anonymous"></script>
 		
+<link href="{{ asset('css2/responsive.css') }}" rel="stylesheet" media="only screen and (max-width: 1200px)" />
+<link href="{{ asset('css2/ui.css') }}" rel="stylesheet" type="text/css"/>
     </body>
 </html>

@@ -131,4 +131,36 @@ public function sortProduct(Request $request)
     
     return redirect()->to($url);
 }
+public function getListProductSearch(Request $request, $search)
+{
+    $previousURL = $request->headers->get('referer');
+    $path = parse_url($previousURL, PHP_URL_PATH);
+    $pattern = '/\/danh-muc\/(.*?)-(\d+)/';
+    preg_match($pattern, $path, $matches);
+    $products = null;
+    if(isset($matches[2])){
+        $id = $matches[2];
+        $products = Product::where([
+            'pro_category_id' => $id,
+            'pro_active' => Product::STATUS_PUBLIC
+        ])       ->where('pro_name', 'like', '%' . $search . '%')
+        ->orderBy('id', 'DESC')
+        ->paginate(9);
+    }
+else {
+    $products = Product::where('pro_active', Product::STATUS_PUBLIC)
+        ->where('pro_name', 'like', '%' . $search . '%')
+        ->orderBy('id', 'DESC')
+        ->paginate(9);
+        
+
+}
+        $viewData = [
+            'products' => $products
+        ];
+
+        session()->forget('viewData');
+    session()->put('viewData', $viewData);
+    return redirect()->to($previousURL);
+}
 }

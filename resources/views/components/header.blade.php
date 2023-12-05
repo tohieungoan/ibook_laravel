@@ -19,7 +19,7 @@
                             								
                             </li>
                             <li class="expand">
-                                <a href="shop-grid.html">Sản phẩm</a>
+                                <a href="{{ route('get.list.product.all') }}">Sản phẩm</a>
                                 <div class="restrain mega-menu megamenu1">
                                     <span>
                                       
@@ -63,7 +63,7 @@
 
 
 
-                                    <li><a href="">Sản phẩm</a>
+                                    <li><a href="{{ route('get.list.product.all') }}">Sản phẩm</a>
                                         <ul>
                                        
                                                @if(isset($categories))
@@ -87,7 +87,7 @@
 
 
         <li class="expand">
-                                <a href="">Sản phẩm</a>
+                                <a href="{{ route('get.list.product.all') }}">Sản phẩm</a>
                                 <div class="restrain mega-menu megamenu1">
                                     <span>
                                       
@@ -206,7 +206,7 @@
                                 @if(Auth::check())
                                 <li><a href="{{ route('accountmanager') }}">Quản lý tài khoản</a></li>
                                 <li><a href="#">Sản phẩm yêu thích</a></li>
-                                <li><a href="#">Giỏ hàng</a></li>
+                                <li><a href="{{ route('get.list.shopping.cart') }}">Giỏ hàng</a></li>
                                 <li><a href="{{route('get.logout.user')}}">Thoát</a></li>
                                 @else 
                                 <li><a href="{{route('get.register')}}">Đăng ký</a></li>
@@ -224,7 +224,7 @@
                             <div class="shopping-carts text-right">
                                 <div class="cart-toggler">
                                     <a href="{{ route('get.list.shopping.cart') }}"><i class="icon-bag"></i></a>
-                                    <a href="{{ route('get.list.shopping.cart') }}"><span class="cart-quantity">{{ Cart::count() }}</span></a>
+                                    <a href="{{ route('get.list.shopping.cart') }}"><span class="cart-quantity">{{ $cartItemCount }}</span></a>
                                 </div>
                            
                             </div>
@@ -237,9 +237,9 @@
                             <div class="search-icon fa fa-search"></div>
                             <div class="product-search restrain">
                                 <div class="container nopadding-right">
-                                    <form action="index.html" id="searchform" method="get">
+                                    <form action="" id="searchform" method="get" onsubmit="submitSearchForm(); return false;">
                                         <div class="input-group">
-                                            <input type="text" class="form-control" maxlength="128" placeholder="Search product...">
+                                            <input type="text" class="form-control" maxlength="128" required placeholder="Search product..." id="searchInput">
                                             <span class="input-group-btn">
                                                 <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
                                             </span>
@@ -256,4 +256,16 @@
             <!-- top details area end -->
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function submitSearchForm() {
+            var searchInput = document.getElementById('searchInput');
+            var searchValue = searchInput.value;
+    
+            var url = "{{ route('get.list.product.search', ['search' => ':search']) }}";
+            url = url.replace(':search', encodeURIComponent(searchValue));
+    
+            window.location.href = url;
+        }
+    </script>
 </header>
