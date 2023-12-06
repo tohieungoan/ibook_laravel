@@ -77,15 +77,17 @@ Route::group(['prefix' => 'gio-hang', 'middleware' => 'CheckLoginUser'], functio
         
     
         Route::get('danh-sach', [App\Http\Controllers\ShoppingCartController::class, 'getListShoppingCart'])->name('get.list.shopping.cart');
+        Route::post('don-hang', [App\Http\Controllers\ShoppingCartController::class, 'taodonhang'])->name('taodonhang');
 
         
+   
         
 
-    
+
     });
 
 });
-
+Route::get('payment-successful', [App\Http\Controllers\ShoppingCartController::class, 'showpayment']);
 
 Route::get('lien-he', [App\Http\Controllers\ContactController::class, 'getContact'])->name('get.contact');
 Route::post('lien-he', [App\Http\Controllers\ContactController::class, 'saveContact'])->name('save.contact');
@@ -124,3 +126,6 @@ Route::post('/changepassword' ,[App\Http\Controllers\AccountManager::class, 'cha
 Route::get('/DeleteAccount' , [App\Http\Controllers\AccountManager::class, 'delete'] )->name('deleteAccount');
 
 Route::post('/quanlytaikhoan',[App\Http\Controllers\AccountManager::class, 'saveprofile'])->name('saveprofile');
+
+Route::post('/post-comment',[App\Http\Controllers\CommentController::class, 'postcomment'])->name('postcomment');
+Route::get('/post-comment',[App\Http\Controllers\CommentController::class, 'getcomment']);

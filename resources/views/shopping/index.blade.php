@@ -64,7 +64,7 @@
                         <td><img style="width: 80px; height: 60px;" src="{{ pare_url_file($product['pro_avatar']) }}" alt=""></td>
                         <td class="align-middle" colspan="2">
                             <span class="old-price">
-                              {{ number_format( ($product['pro_price'] * $product['quantity']) +
+                              {{ number_format( ($product['pro_price'] ) +
                               (($product['pro_price'] * $product['pro_sale']) / 100 ), 0, ',', ',') 
                                  
                               }}đ
@@ -124,9 +124,10 @@
         if (quantity > 1) {
             quantity--;
             input.value = quantity;
-            updateTotal();
+          
             updateQuantity(input);
             updatePrice(input);
+            updateTotal();
         }
     }
 
@@ -136,9 +137,10 @@
    
         quantity++;
         input.value = quantity;
-        updateTotal();
+       
         updateQuantity(input);
         updatePrice(input);
+        updateTotal();
     }
     function updatePrice(input) {
   // Lấy đối tượng chứa giá sản phẩm
@@ -195,7 +197,7 @@
             if (checkboxes[i].checked) {
                 var quantity = parseInt(quantities[i].value);
                 var price = parseInt(prices[i].innerText.replace(/[^\d]/g, '')); // Lấy giá trị số từ chuỗi giá tiền
-                total += quantity * price;
+                total += price;
             }
         }
 

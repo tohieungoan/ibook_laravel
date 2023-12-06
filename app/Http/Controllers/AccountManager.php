@@ -94,5 +94,6 @@ if (!$profile) {
       }
   }
     $profile->save();
+    return back();
   }
 }

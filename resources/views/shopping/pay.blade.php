@@ -86,7 +86,17 @@
 
   
   <div class="card-body border-top">
-    <a href="#" class="btn btn-primary float-md-right"> Đặt hàng<i class="fa fa-chevron-right"></i> </a>
+<form action="{{ route('taodonhang') }}" method="POST">
+@csrf
+<input type="hidden" name="productsWithInfo" value="{{ json_encode($productsWithInfo) }}">
+
+<input type="hidden" name="totalafftercoupon" value="{{$total+($total*0.1)}}">
+
+<button type="submit" class="btn btn-primary float-md-right">Đặt hàng<i class="fa fa-chevron-right"></i></button>
+
+
+</form>
+
     <a href="{{ route('get.list.shopping.cart') }}" class="btn btn-light"> <i class="fa fa-chevron-left"></i>Tiếp tục mua sắm  </a>
   </div>	
   </div> <!-- card.// -->

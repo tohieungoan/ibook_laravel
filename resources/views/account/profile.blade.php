@@ -8,6 +8,11 @@
     }
 
 </style>
+@if(isset($message))
+    <div class="alert alert-danger">
+        {{ $message }}
+    </div>
+@endif
 <div class="breadcrumbs">
     <div class="container">
         <div class="row">

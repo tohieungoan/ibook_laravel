@@ -42,9 +42,6 @@
 									<div class="actions-log">
 										<input type="submit" class="button" name="login" value="Đăng nhập">
 									</div>
-									
-									
-									
 								</div>
 							</form>
 							

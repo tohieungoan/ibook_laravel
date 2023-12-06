@@ -1,5 +1,46 @@
 @extends('layouts.app')
 @section('content')
+<style>
+	.comment {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.content {
+  flex-grow: 1;
+}
+
+.name {
+  font-weight: bold;
+}
+
+.text {
+  margin-top: 15px;
+}
+.star {
+  color: gray;
+}
+
+.star.active {
+  color: yellow;
+}
+.star.activ2 {
+  color: yellow;
+}
+</style>
+@if(isset($exists))
+    <div class="alert alert-danger" style="text-align: center">
+        {{ $exists }}
+    </div>
+@endif
 @if(isset($productDetail))
 		<!-- breadcrumbs area start -->
 		<div class="breadcrumbs">
@@ -12,7 +53,7 @@
 									<a href="index.html">Home</a>
 									<span><i class="fa fa-angle-right"></i></span>
 								</li>
-								<li class="category3"><span>Shop List</span></li>
+								<li class="category3"><span>Chi tiết sản phẩm</span></li>
 							</ul>
 						</div>
 					</div>
@@ -34,34 +75,7 @@
 								</div>
 								</a>
 							</div>
-							<div class="single-zoom-thumb">
-								<ul class="bxslider" id="gallery_01">
-									<li>
-										<a href="#" class="elevatezoom-gallery active" data-update="" data-image="img/product-details/big-1-1.jpg" data-zoom-image="img/product-details/ex-big-1-1.jpg"><img src="img/product-details/th-1-1.jpg" alt="zo-th-1" /></a>
-									</li>
-									<li class="">
-										<a href="#" class="elevatezoom-gallery" data-image="img/product-details/big-1-2.jpg" data-zoom-image="img/product-details/ex-big-1-2.jpg"><img src="img/product-details/th-1-2.jpg" alt="zo-th-2"></a>
-									</li>
-									<li class="">
-										<a href="#" class="elevatezoom-gallery" data-image="img/product-details/big-1-3.jpg" data-zoom-image="img/product-details/ex-big-1-3.jpg"><img src="img/product-details/th-1-3.jpg" alt="ex-big-3" /></a>
-									</li>
-									<li class="">
-										<a href="#" class="elevatezoom-gallery" data-image="img/product-details/big-4.jpg" data-zoom-image="img/product-details/ex-big-4.jpg"><img src="img/product-details/th-4.jpg" alt="zo-th-4"></a>
-									</li>
-									<li class="">
-										<a href="#" class="elevatezoom-gallery" data-image="img/product-details/big-5.jpg" data-zoom-image="img/product-details/ex-big-5.jpg"><img src="img/product-details/th-5.jpg" alt="zo-th-5" /></a>
-									</li>
-									<li class="">
-										<a href="#" class="elevatezoom-gallery" data-image="img/product-details/big-6.jpg" data-zoom-image="img/product-details/ex-big-6.jpg"><img src="img/product-details/th-6.jpg" alt="ex-big-3" /></a>
-									</li>
-									<li class="">
-										<a href="#" class="elevatezoom-gallery" data-image="img/product-details/big-7.jpg" data-zoom-image="img/product-details/ex-big-7.jpg"><img src="img/product-details/th-7.jpg" alt="ex-big-3" /></a>
-									</li>
-									<li class="">
-										<a href="#" class="elevatezoom-gallery" data-image="img/product-details/big-8.jpg" data-zoom-image="img/product-details/ex-big-8.jpg"><img src="img/product-details/th-8.jpg" alt="ex-big-3" /></a>
-									</li>
-								</ul>
-							</div>
+			
 						</div>
 					</div>
 					<div class="col-md-7 col-sm-7 col-xs-12" style="">
@@ -72,7 +86,7 @@
 									<h2 class="product-name"><a href="#">{{ $productDetail->pro_name }}</a></h2>
 									<div class="rating-price">	
 										<div class="pro-rating">
-											<a href="#"><i class="fa fa-star"></i></a>
+											<span href="#"><i class="fa fa-star"></i></span>
 											<a href="#"><i class="fa fa-star"></i></a>
 											<a href="#"><i class="fa fa-star"></i></a>
 											<a href="#"><i class="fa fa-star"></i></a>
@@ -85,15 +99,15 @@
 									<div class="product-desc">
 										<p>{{ $productDetail->pro_description_seo }}</p>
 									</div>
-									<p class="availability in-stock">Availability: <span>In stock</span></p>
+									<p class="availability in-stock">Tình trạng: <span>Còn hàng</span></p>
 									<div class="actions-e">
 										<div class="action-buttons-single">
 											<div class="inputx-content">
-												<label for="qty">Quantity:</label>
+												<label for="qty">Số lượng:</label>
 												<input type="text" name="qty" id="qty" maxlength="12" value="1" title="Qty" class="input-text qty">
 											</div>
 											<div class="add-to-cart">
-												<a href="#">Add to cart</a>
+												<a href="#">Thêm vào giỏ</a>
 											</div>
 											<div class="add-to-links">
 												<div class="add-to-wishlist">
@@ -119,7 +133,7 @@
 						  <!-- Nav tabs -->
 						<ul class="details-tab">
 							<li class="active"><a href="#home" data-toggle="tab">Mô tả</a></li>
-							<li class=""><a href="#messages" data-toggle="tab"> Đánh giá (1)</a></li>
+							<li class=""><a href="#messages" data-toggle="tab"> Đánh giá ({{ $count}})</a></li>
 						</ul>
 						  <!-- Tab panes -->
 						<div class="tab-content">
@@ -131,55 +145,89 @@
 								</div>
 							</div>
 							<div role="tabpanel" class="tab-pane" id="messages">
-								<div class="single-post-comments col-md-6 col-md-offset-3">
+								<div class="single-post-comments col-md-10 col-md-offset-1">
 									<div class="comments-area">
-										<h3 class="comment-reply-title">1 REVIEW FOR TURPIS VELIT ALIQUET</h3>
 										<div class="comments-list">
-											<ul>
+											<ul id="commentList">
 												<li>
-													<div class="comments-details">
-														<div class="comments-list-img">
-															<img src="img/user-1.jpg" alt="">
-														</div>
-														<div class="comments-content-wrap">
+													
+														
+														@if($comment!=null)
+														@foreach($comment as $listcomment)
+														<div class="comments-details">
+														<div class="comment">
+															@if($listcomment->avatar!=null)
+															<img class="avatar" src="{{ pare_url_file($listcomment->avatar) }}" alt="Avatar">
+															<b><span class="name">{{ $listcomment->name }} </span></b>
+															@else
+															<img class="avatar" src="path/to/avatar.jpg" alt="Avatar">
+															<b><span class="name">{{ $listcomment->name }} </span></b>
+	
+															@endif
+														<div class="comments-content-wrap"  style="max-width: 60%">
 															<span>
-																<b><a href="#">Admin - </a></b>
-																<span class="post-time">October 6, 2014 at 1:38 am</span>
+																@php
+																$ratedStars = $listcomment->star; // Số sao đã đánh giá
+																$starconlai = 5 -$ratedStars;
+															@endphp
+																<b><span class="name">    @for ($i = 1; $i <= $ratedStars; $i++)
+																	<span class="star activ2" ><i class="fa fa-star"></i></span>
+																@endfor 
+																@for ($i = 1; $i <= $starconlai; $i++)
+																<span class="star" ><i class="fa fa-star"></i></span>
+																@endfor 
+															</span></b>
+																<span class="post-time">{{ $listcomment->created_at }}</span>
 															</span>
-															<p>Lorem et placerat vestibulum, metus nisi posuere nisl, in accumsan elit odio quis mi.</p>
+															<p class="content">{{ $listcomment->content }}</p>
+														</div>
 														</div>
 													</div>
+													@endforeach
+													@endif
+													
 												</li>									
 											</ul>
 										</div>
 									</div>
+									@if(Auth::check())
 									<div class="comment-respond">
-										<h3 class="comment-reply-title">Add a review</h3>
-										<span class="email-notes">Your email address will not be published. Required fields are marked *</span>
-										<form action="#">
+			
+										<form id="commentForm" action="{{ route('postcomment') }}" method="POST">
+											@csrf
 											<div class="row">
 												<div class="col-md-12">
-													<p>Name *</p>
-													<input type="text">
-												</div>
-												<div class="col-md-12">
-													<p>Email *</p>
-													<input type="email">
-												</div>
-												<div class="col-md-12">
-													<p>Your Rating</p>
+													<div class="comment">
+														@if($profile->avatar!=null)
+														<img class="avatar" src="{{ pare_url_file($profile->avatar) }}" alt="Avatar">
+
+														@else
+														<img class="avatar" src="path/to/avatar.jpg" alt="Avatar">
+														
+
+														@endif
+														<div class="content">
+														  <p class="name">{{ $profile->name }}</p>
+
+														</div>
+													</div>
+													<input type="hidden" name="layngoisao" value="">
 													<div class="pro-rating">
-														<a href="#"><i class="fa fa-star"></i></a>
-														<a href="#"><i class="fa fa-star"></i></a>
-														<a href="#"><i class="fa fa-star"></i></a>
-														<a href="#"><i class="fa fa-star-o"></i></a>
-														<a href="#"><i class="fa fa-star-o"></i></a>
+														<span class="star" data-value="1"><i class="fa fa-star"></i></span>
+														<span class="star" data-value="2"><i class="fa fa-star"></i></span>
+														<span class="star" data-value="3"><i class="fa fa-star"></i></span>
+														<span class="star" data-value="4"><i class="fa fa-star"></i></span>
+														<span class="star" data-value="5"><i class="fa fa-star"></i></span>
 													</div>
 												</div>
 												<div class="col-md-12 comment-form-comment">
-													<p>Your Review</p>
-													<textarea id="message" cols="30" rows="10"></textarea>
+													<p>Để lại bình luận</p>
+													<textarea name="content" id="message" cols="30" rows="10"></textarea>
+											
 													<input type="submit" value="Submit">
+													@else
+													<a class="btn btn-primary" href="{{route('get.login')}}">Đăng nhập</a>
+													@endif
 												</div>
 											</div>
 										</form>
@@ -192,339 +240,6 @@
 			</div>
 		</div>
 		<!-- product-details Area end -->
-		<!-- product section start -->
-		<div class="our-product-area new-product">
-			<div class="container">
-				<div class="area-title">
-					<h2>New products</h2>
-				</div>
-				<!-- our-product area start -->
-				<div class="row">
-					<div class="col-md-12">
-						<div class="row">
-							<div class="features-curosel">
-								<!-- single-product start -->
-								<div class="col-lg-12 col-md-12">
-									<div class="single-product first-sale">
-										<div class="product-img">
-											<a href="#">
-												<img class="primary-image" src="img/products/product-1.jpg" alt="" />
-												<img class="secondary-image" src="img/products/product-2.jpg" alt="" />
-											</a>
-											<div class="action-zoom">
-												<div class="add-to-cart">
-													<a href="#" title="Quick View"><i class="fa fa-search-plus"></i></a>
-												</div>
-											</div>
-											<div class="actions">
-												<div class="action-buttons">
-													<div class="add-to-links">
-														<div class="add-to-wishlist">
-															<a href="#" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
-														</div>
-														<div class="compare-button">
-															<a href="#" title="Add to Cart"><i class="icon-bag"></i></a>
-														</div>									
-													</div>
-													<div class="quickviewbtn">
-														<a href="#" title="Add to Compare"><i class="fa fa-retweet"></i></a>
-													</div>
-												</div>
-											</div>
-											<div class="price-box">
-												<span class="new-price">$200.00</span>
-											</div>
-										</div>
-										<div class="product-content">
-											<h2 class="product-name"><a href="#">Donec ac tempus</a></h2>
-											<p>Nunc facilisis sagittis ullamcorper...</p>
-										</div>
-									</div>
-								</div>
-								<!-- single-product end -->
-								<!-- single-product start -->
-								<div class="col-lg-12 col-md-12">
-									<div class="single-product first-sale">
-										<div class="product-img">
-											<a href="#">
-												<img class="primary-image" src="img/products/product-5.jpg" alt="" />
-												<img class="secondary-image" src="img/products/product-6.jpg" alt="" />
-											</a>
-											<div class="action-zoom">
-												<div class="add-to-cart">
-													<a href="#" title="Quick View"><i class="fa fa-search-plus"></i></a>
-												</div>
-											</div>
-											<div class="actions">
-												<div class="action-buttons">
-													<div class="add-to-links">
-														<div class="add-to-wishlist">
-															<a href="#" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
-														</div>
-														<div class="compare-button">
-															<a href="#" title="Add to Cart"><i class="icon-bag"></i></a>
-														</div>									
-													</div>
-													<div class="quickviewbtn">
-														<a href="#" title="Add to Compare"><i class="fa fa-retweet"></i></a>
-													</div>
-												</div>
-											</div>
-											<div class="price-box">
-												<span class="new-price">$300.00</span>
-											</div>
-										</div>
-										<div class="product-content">
-											<h2 class="product-name"><a href="#">Primis in faucibus</a></h2>
-											<p>Nunc facilisis sagittis ullamcorper...</p>
-										</div>
-									</div>
-								</div>
-								<!-- single-product end -->
-								<!-- single-product start -->
-								<div class="col-lg-12 col-md-12">
-									<div class="single-product first-sale">
-										<div class="product-img">
-											<a href="#">
-												<img class="primary-image" src="img/products/product-9.jpg" alt="" />
-												<img class="secondary-image" src="img/products/product-10.jpg" alt="" />
-											</a>
-											<div class="action-zoom">
-												<div class="add-to-cart">
-													<a href="#" title="Quick View"><i class="fa fa-search-plus"></i></a>
-												</div>
-											</div>
-											<div class="actions">
-												<div class="action-buttons">
-													<div class="add-to-links">
-														<div class="add-to-wishlist">
-															<a href="#" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
-														</div>
-														<div class="compare-button">
-															<a href="#" title="Add to Cart"><i class="icon-bag"></i></a>
-														</div>									
-													</div>
-													<div class="quickviewbtn">
-														<a href="#" title="Add to Compare"><i class="fa fa-retweet"></i></a>
-													</div>
-												</div>
-											</div>
-											<div class="price-box">
-												<span class="new-price">$270.00</span>
-											</div>
-										</div>
-										<div class="product-content">
-											<h2 class="product-name"><a href="#">Voluptas nulla</a></h2>
-											<p>Nunc facilisis sagittis ullamcorper...</p>
-										</div>
-									</div>
-									
-								</div>
-								<!-- single-product end -->
-								<!-- single-product start -->
-								<div class="col-lg-12 col-md-12">
-									<div class="single-product first-sale">
-										<div class="product-img">
-											<a href="#">
-												<img class="primary-image" src="img/products/product-13.jpg" alt="" />
-												<img class="secondary-image" src="img/products/product-1.jpg" alt="" />
-											</a>
-											<div class="action-zoom">
-												<div class="add-to-cart">
-													<a href="#" title="Quick View"><i class="fa fa-search-plus"></i></a>
-												</div>
-											</div>
-											<div class="actions">
-												<div class="action-buttons">
-													<div class="add-to-links">
-														<div class="add-to-wishlist">
-															<a href="#" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
-														</div>
-														<div class="compare-button">
-															<a href="#" title="Add to Cart"><i class="icon-bag"></i></a>
-														</div>									
-													</div>
-													<div class="quickviewbtn">
-														<a href="#" title="Add to Compare"><i class="fa fa-retweet"></i></a>
-													</div>
-												</div>
-											</div>
-											<div class="price-box">
-												<span class="new-price">$340.00</span>
-											</div>
-										</div>
-										<div class="product-content">
-											<h2 class="product-name"><a href="#">Cras neque metus</a></h2>
-											<p>Nunc facilisis sagittis ullamcorper...</p>
-										</div>
-									</div>
-								</div>
-								<!-- single-product end -->
-								<!-- single-product start -->
-								<div class="col-lg-12 col-md-12">
-									<div class="single-product first-sale">
-										<span class="sale-text">Sale</span>
-										<div class="product-img">
-											<a href="#">
-												<img class="primary-image" src="img/products/product-4.jpg" alt="" />
-												<img class="secondary-image" src="img/products/product-5.jpg" alt="" />
-											</a>
-											<div class="action-zoom">
-												<div class="add-to-cart">
-													<a href="#" title="Quick View"><i class="fa fa-search-plus"></i></a>
-												</div>
-											</div>
-											<div class="actions">
-												<div class="action-buttons">
-													<div class="add-to-links">
-														<div class="add-to-wishlist">
-															<a href="#" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
-														</div>
-														<div class="compare-button">
-															<a href="#" title="Add to Cart"><i class="icon-bag"></i></a>
-														</div>									
-													</div>
-													<div class="quickviewbtn">
-														<a href="#" title="Add to Compare"><i class="fa fa-retweet"></i></a>
-													</div>
-												</div>
-											</div>
-											<div class="price-box">
-												<span class="new-price">$360.00</span>
-											</div>
-										</div>
-										<div class="product-content">
-											<h2 class="product-name"><a href="#">Occaecati cupiditate</a></h2>
-											<p>Nunc facilisis sagittis ullamcorper...</p>
-										</div>
-									</div>
-								</div>
-								<!-- single-product end -->
-								<!-- single-product start -->
-								<div class="col-lg-12 col-md-12">
-									<div class="single-product first-sale">
-										<div class="product-img">
-											<a href="#">
-												<img class="primary-image" src="img/products/product-8.jpg" alt="" />
-												<img class="secondary-image" src="img/products/product-9.jpg" alt="" />
-											</a>
-											<div class="action-zoom">
-												<div class="add-to-cart">
-													<a href="#" title="Quick View"><i class="fa fa-search-plus"></i></a>
-												</div>
-											</div>
-											<div class="actions">
-												<div class="action-buttons">
-													<div class="add-to-links">
-														<div class="add-to-wishlist">
-															<a href="#" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
-														</div>
-														<div class="compare-button">
-															<a href="#" title="Add to Cart"><i class="icon-bag"></i></a>
-														</div>									
-													</div>
-													<div class="quickviewbtn">
-														<a href="#" title="Add to Compare"><i class="fa fa-retweet"></i></a>
-													</div>
-												</div>
-											</div>
-											<div class="price-box">
-												<span class="new-price">$400.00</span>
-											</div>
-										</div>
-										<div class="product-content">
-											<h2 class="product-name"><a href="#">Accumsan elit</a></h2>
-											<p>Nunc facilisis sagittis ullamcorper...</p>
-										</div>
-									</div>
-								</div>
-								<!-- single-product end -->
-								<!-- single-product start -->
-								<div class="col-lg-12 col-md-12">
-									<div class="single-product first-sale">
-										<div class="product-img">
-											<a href="#">
-												<img class="primary-image" src="img/products/product-11.jpg" alt="" />
-												<img class="secondary-image" src="img/products/product-12.jpg" alt="" />
-											</a>
-											<div class="action-zoom">
-												<div class="add-to-cart">
-													<a href="#" title="Quick View"><i class="fa fa-search-plus"></i></a>
-												</div>
-											</div>
-											<div class="actions">
-												<div class="action-buttons">
-													<div class="add-to-links">
-														<div class="add-to-wishlist">
-															<a href="#" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
-														</div>
-														<div class="compare-button">
-															<a href="#" title="Add to Cart"><i class="icon-bag"></i></a>
-														</div>									
-													</div>
-													<div class="quickviewbtn">
-														<a href="#" title="Add to Compare"><i class="fa fa-retweet"></i></a>
-													</div>
-												</div>
-											</div>
-											<div class="price-box">
-												<span class="new-price">$280.00</span>
-											</div>
-										</div>
-										<div class="product-content">
-											<h2 class="product-name"><a href="#">Pellentesque habitant</a></h2>
-											<p>Nunc facilisis sagittis ullamcorper...</p>
-										</div>
-									</div>
-								</div>
-								<!-- single-product end -->
-								<!-- single-product start -->
-								<div class="col-lg-12 col-md-12">
-									<div class="single-product first-sale">
-										<div class="product-img">
-											<a href="#">
-												<img class="primary-image" src="img/products/product-11.jpg" alt="" />
-												<img class="secondary-image" src="img/products/product-2.jpg" alt="" />
-											</a>
-											<div class="action-zoom">
-												<div class="add-to-cart">
-													<a href="#" title="Quick View"><i class="fa fa-search-plus"></i></a>
-												</div>
-											</div>
-											<div class="actions">
-												<div class="action-buttons">
-													<div class="add-to-links">
-														<div class="add-to-wishlist">
-															<a href="#" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
-														</div>
-														<div class="compare-button">
-															<a href="#" title="Add to Cart"><i class="icon-bag"></i></a>
-														</div>									
-													</div>
-													<div class="quickviewbtn">
-														<a href="#" title="Add to Compare"><i class="fa fa-retweet"></i></a>
-													</div>
-												</div>
-											</div>
-											<div class="price-box">
-												<span class="new-price">$222.00</span>
-											</div>
-										</div>
-										<div class="product-content">
-											<h2 class="product-name"><a href="#">Donec ac tempus</a></h2>
-											<p>Nunc facilisis sagittis ullamcorper...</p>
-										</div>
-									</div>
-								</div>
-								<!-- single-product end -->
-							</div>
-						</div>	
-					</div>
-				</div>
-				<!-- our-product area end -->	
-			</div>
-		</div>
-		<!-- product section end -->
 
     </body>
 </html>
@@ -534,5 +249,95 @@
 
     // Gán nội dung CKEditor vào phần tử HTML
     $('#editorContent').html(ckeditorContent);
+</script>
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+  var stars = document.querySelectorAll('.star');
+  var inputElement = document.querySelector('input[name="layngoisao"]');
+
+  stars.forEach(function(star) {
+    star.addEventListener('click', function() {
+      var value = this.getAttribute('data-value');
+
+      stars.forEach(function(star) {
+        var starValue = star.getAttribute('data-value');
+        if (starValue <= value) {
+          star.classList.add('active');
+        } else {
+          star.classList.remove('active');
+        }
+      });
+
+      inputElement.value = value; // Gán giá trị của ngôi sao vào phần tử input
+    });
+  });
+});
+  </script>
+
+<script>
+  $(document).ready(function() {
+    $('#commentForm').submit(function(e) {
+        e.preventDefault(); // Chặn hành vi mặc định của sự kiện submit
+
+        var layngoisaoValue = $('input[name="layngoisao"]').val();
+        var contentValue = $('#message').val();
+
+        $.post(
+            "{{ route('postcomment') }}",
+            {
+                layngoisao: layngoisaoValue,
+                content: contentValue,
+                _token: '{{ csrf_token() }}'
+            },
+            function(response) {
+                if(response.message=="ok"){
+					// Sau khi comment được gửi
+// Lấy giá trị của các trường comment
+var starcheck = layngoisaoValue;
+var starsau = 5 - starcheck;
+
+// Tạo một thẻli mới chứa nội dung comment
+var newComment = document.createElement('li');
+newComment.innerHTML = `
+<div class="comments-details">
+  <div class="comment">
+    @if($profile->avatar!=null)
+    <img class="avatar" src="{{ pare_url_file($profile->avatar) }}" alt="Avatar">
+    @else
+    <img class="avatar" src="path/to/avatar.jpg" alt="Avatar">
+    @endif
+    <b><span class="name">{{ $profile->name }} </span></b>
+    <div class="comments-content-wrap" style="max-width: 60%">
+      <span>
+        <b>
+          <span class="name">
+            @for ($i = 1; $i <= `starcheck `; $i++)
+              <span class="star activ2"><i class="fa fa-star"></i></span>
+            @endfor
+            @for ($i = 1; $i <=` starsau`; $i++)
+              <span class="star"><i class="fa fa-star"></i></span>
+            @endfor
+          </span>
+        </b>
+        <span class="post-time">{{ date('Y-m-d H:i:s') }}</span>
+      </span>
+      <p class="content">${contentValue}</p>
+    </div>
+  </div>
+</div>
+`;
+
+var commentList = document.getElementById('commentList');
+commentList.appendChild(newComment);
+
+// Xóa nội dung trong trường comment sau khi gửi
+document.getElementById('message').value = '';
+				}
+            }
+        ).fail(function(xhr, status, error) {
+            console.error(error);
+        });
+    });
+});
 </script>
 @stop
