@@ -76,5 +76,7 @@
    
         </tbody>
       </table>
+      {{ $products->links('components.pagination')  }}
+      
   </div> 
 @stop

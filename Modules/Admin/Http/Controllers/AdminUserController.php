@@ -27,5 +27,22 @@ class AdminUserController extends Controller
         return view('admin::category.create');
     }
 
-   
+    public function action(Request $request , $action , $id) {
+        if($action){
+            $user = User::find($id);
+
+            switch ($action) {
+                case 'delete':
+                    $user->delete();
+                 
+                    break;
+                    case 'active':
+                        $user->active = $user->active ? 0 : 1;
+                        $user->save();
+                        break;
+            }
+        }
+       return redirect()->back();
+
+    }
 }

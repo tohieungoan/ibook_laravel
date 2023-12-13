@@ -39,5 +39,7 @@
 
         </tbody>
       </table>
+      {{ $categories->links('components.pagination')  }}
+
   </div> 
 @stop

@@ -28,7 +28,7 @@
             <td>{{$user->name}}</td>
             <td>{{$user->email}}</td>
             <td>{{$user->phone}}</td>
-            <td></td>
+            <td> <img src="{{ pare_url_file($user->avatar) }}" alt="" class="img img-responsive" style="width: 80px"></td>
             <td><a class="label {{$user->getStatus($user->active)['class']}}" href="{{ route('admin.get.action.user',['active',$user->id]) }}">{{$user->getStatus($user->active)['name']}}</a></td>
             <td>
                 <a style="padding: 5px 10px; border: 1px solid #999; font-size: 12px" href="{{route('admin.get.edit.user', $user->id)}}">
@@ -44,5 +44,7 @@
 
         </tbody>
       </table>
+      {{ $users->links('components.pagination')  }}
+      
   </div> 
 @stop

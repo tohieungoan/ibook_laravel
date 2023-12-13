@@ -36,11 +36,7 @@
   color: yellow;
 }
 </style>
-@if(isset($exists))
-    <div class="alert alert-danger" style="text-align: center">
-        {{ $exists }}
-    </div>
-@endif
+
 @if(isset($productDetail))
 		<!-- breadcrumbs area start -->
 		<div class="breadcrumbs">
@@ -86,14 +82,24 @@
 									<h2 class="product-name"><a href="#">{{ $productDetail->pro_name }}</a></h2>
 									<div class="rating-price">	
 										<div class="pro-rating">
-											<span href="#"><i class="fa fa-star"></i></span>
-											<a href="#"><i class="fa fa-star"></i></a>
-											<a href="#"><i class="fa fa-star"></i></a>
-											<a href="#"><i class="fa fa-star"></i></a>
-											<a href="#"><i class="fa fa-star"></i></a>
+
+											<span>
+												@php
+												$ratedStars = (int)$star; // Số sao đã đánh giá
+												$starconlai = 5 -$ratedStars;
+												@endphp
+												<b><span class="name">    @for ($i = 1; $i <= $ratedStars; $i++)
+													<span class="star activ2" ><i class="fa fa-star"></i></span>
+												@endfor 
+												@for ($i = 1; $i <= $starconlai; $i++)
+												<span class="" ><i class="fa fa-star"></i></span>
+												@endfor 
+											</span>
 										</div>
 										<div class="price-boxes">
-											<span class="new-price">{{ $productDetail->pro_price }} VND</span>
+											<span class="new-price">{{  number_format( $productDetail->pro_price, 0, ',', ',') 
+                   
+											}}đ</span>
 										</div>
 									</div>
 									<div class="product-desc">
@@ -107,7 +113,7 @@
 												<input type="text" name="qty" id="qty" maxlength="12" value="1" title="Qty" class="input-text qty">
 											</div>
 											<div class="add-to-cart">
-												<a href="#">Thêm vào giỏ</a>
+												<a href="{{ route('add.shopping.cart',$productDetail->id) }}">Thêm vào giỏ</a>
 											</div>
 											<div class="add-to-links">
 												<div class="add-to-wishlist">
@@ -133,7 +139,7 @@
 						  <!-- Nav tabs -->
 						<ul class="details-tab">
 							<li class="active"><a href="#home" data-toggle="tab">Mô tả</a></li>
-							<li class=""><a href="#messages" data-toggle="tab"> Đánh giá ({{ $count}})</a></li>
+							<li class=""><a href="#messages" id="mess" value="{{ $count }}" data-toggle="tab"> Đánh giá ({{ $count}})</a></li>
 						</ul>
 						  <!-- Tab panes -->
 						<div class="tab-content">
@@ -169,12 +175,12 @@
 																@php
 																$ratedStars = $listcomment->star; // Số sao đã đánh giá
 																$starconlai = 5 -$ratedStars;
-															@endphp
+																@endphp
 																<b><span class="name">    @for ($i = 1; $i <= $ratedStars; $i++)
 																	<span class="star activ2" ><i class="fa fa-star"></i></span>
 																@endfor 
 																@for ($i = 1; $i <= $starconlai; $i++)
-																<span class="star" ><i class="fa fa-star"></i></span>
+																<span class="" ><i class="fa fa-star"></i></span>
 																@endfor 
 															</span></b>
 																<span class="post-time">{{ $listcomment->created_at }}</span>
@@ -301,6 +307,7 @@ var newComment = document.createElement('li');
 newComment.innerHTML = `
 <div class="comments-details">
   <div class="comment">
+	@if(isset($profile))
     @if($profile->avatar!=null)
     <img class="avatar" src="{{ pare_url_file($profile->avatar) }}" alt="Avatar">
     @else
@@ -323,6 +330,7 @@ newComment.innerHTML = `
       </span>
       <p class="content">${contentValue}</p>
     </div>
+	@endif
   </div>
 </div>
 `;
@@ -332,6 +340,17 @@ commentList.appendChild(newComment);
 
 // Xóa nội dung trong trường comment sau khi gửi
 document.getElementById('message').value = '';
+
+
+// Lấy giá trị hiện tại của Đánh giá
+var currentCount = parseInt(document.querySelector('#mess').getAttribute('value'));
+
+// Tăng giá trị lên 1
+var newCount = currentCount + 1;
+
+// Cập nhật giá trị mới vào thuộc tính value và nội dung của nút đánh giá
+document.querySelector('#mess').setAttribute('value', newCount);
+document.querySelector('#mess').innerHTML = 'Đánh giá (' + newCount + ')';
 				}
             }
         ).fail(function(xhr, status, error) {

@@ -77,7 +77,7 @@
                             <button type="button" class="btn btn-link px-2" onclick="decrementQuantity(this)">
                                 <i class="fas fa-minus"></i>
                             </button>
-                            <input type="number" style="max-width: 7ch; min-width: 5ch;" class="quantity-input" name="quantity[]" value="{{ $product['quantity'] }}" min="1">
+                            <input type="number" readonly  style="max-width: 7ch; min-width: 5ch;" class="quantity-input" name="quantity[]" value="{{ $product['quantity'] }}" min="1">
                             <button type="button" class="btn btn-link px-2" onclick="incrementQuantity(this)">
                                 <i class="fas fa-plus"></i>
                             </button>

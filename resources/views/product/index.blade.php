@@ -143,7 +143,7 @@
                                                                 <a href="#" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
                                                             </div>
                                                             <div class="compare-button">
-                                                                <a href="#" title="Add to Cart"><i class="icon-bag"></i></a>
+                                                                <a href="{{ route('add.shopping.cart',$product->id) }}" title="Add to Cart"><i class="icon-bag"></i></a>
                                                             </div>									
                                                         </div>
                                                         <div class="quickviewbtn">

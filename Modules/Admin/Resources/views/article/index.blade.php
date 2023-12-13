@@ -57,5 +57,7 @@
    
         </tbody>
       </table>
+      {{ $articles->links('components.pagination')  }}
+      
   </div> 
 @stop

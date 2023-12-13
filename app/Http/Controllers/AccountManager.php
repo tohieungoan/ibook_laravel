@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
+use App\Models\Transaction;
 use App\Models\Profile;
 use App\Models\User;
 
@@ -42,8 +43,14 @@ if ($profile) {
 
   public function billing()
   {
-
-    return view('account.purchasehistory');
+    $transactions = Transaction::where('tr_user_id', Auth::user()->id)
+    ->where('tr_status', '1')
+        ->orderBy('id', 'DESC')
+        ->paginate(9);
+        $viewData = [
+          'transactions' => $transactions
+      ];
+        return view('account.purchasehistory',$viewData);
   }
 
   public function changepassword(Request $request)
@@ -91,6 +98,10 @@ if (!$profile) {
       $file = upload_image('avatar');
       if (isset($file['name'])) {
           $profile->avatar = $file['name'];
+          $user = User::find(Auth::user()->id);
+          $user->avatar = $file['name'];
+$user->save()  ;
+
       }
   }
     $profile->save();

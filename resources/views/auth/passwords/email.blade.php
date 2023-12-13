@@ -34,7 +34,7 @@
                         </div>
                     @endif
 
-                    <form method="POST" action="">
+                    <form method="POST" action="{{ route('sendmail') }}">
                         @csrf
 
                         <div class="row mb-3">

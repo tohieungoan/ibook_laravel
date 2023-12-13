@@ -284,7 +284,7 @@ tbody tr td .fa-long-arrow-down {
                 <form>
 
                     <div class="col-md-3">
-                        <a class="d-flex flex-column align-items-center" href="">
+                        <a class="d-flex flex-column align-items-center" href="{{ route('checkdonhang','dangxuly') }}">
                             <i class="fas fa-clipboard-list fa-3x"></i>
                             <span style="margin-top: 5px;">Đang xử lý</span>
                         </a>
@@ -292,7 +292,7 @@ tbody tr td .fa-long-arrow-down {
                     </div>
                     <!-- Form Group (birthday)-->
                     <div class="col-md-3">
-                        <a class="d-flex flex-column align-items-center" href="">
+                        <a class="d-flex flex-column align-items-center" href="{{ route('checkdonhang','danggiao') }}">
                             <i class="fas fa-box-open fa-3x"></i>
                             <span style="margin-top: 5px;">Đang giao hàng</span>
                         </a>
@@ -300,14 +300,14 @@ tbody tr td .fa-long-arrow-down {
                     </div>
 
                     <div class="col-md-3">
-                        <a class="d-flex flex-column align-items-center" href="">
+                        <a class="d-flex flex-column align-items-center" href="{{ route('checkdonhang','danhan') }}">
                             <i class="fas fa-box-open fa-3x"></i>
                             <span style="margin-top: 5px;">Đã nhận hàng</span>
                         </a>
 
                     </div>
                     <div class="col-md-3">
-                        <a class="d-flex flex-column align-items-center" href="">
+                        <a class="d-flex flex-column align-items-center" href="{{ route('checkdonhang','dahuy') }}">
                             <i class="fa-solid fa-store-slash fa-3x"></i>
                             <span style="margin-top: 5px;">Đã hủy</span>
                         </a>
@@ -320,76 +320,35 @@ tbody tr td .fa-long-arrow-down {
                         <table class="table  table-borderless">
                             <thead>
                                 <tr>
-                                    <th scope="col">Activity</th>
-                                    <th scope="col">Mode</th>
-                                    <th scope="col">Date</th>
-                                    <th scope="col" class="text-right">Amount</th>
+                                    <th scope="col">Đơn hàng</th>
+                                    <th scope="col">Thanh toán</th>
+                                    <th scope="col">Ngày tạo đơn</th>
+                                    <th scope="col" class="">Giá tiền</th>
+
                                 </tr>
                             </thead>
                             <tbody>
+                               
+                                @if(isset($transactions))
+                                @foreach($transactions as $transaction)
                                 <tr>
-                                    <td scope="row"> <span class="fa fa-briefcase mr-1"></span> Coorg Trip </td>
-                                    <td><span class="fa fa-cc-mastercard"></span></td>
-                                    <td class="text-muted">12 Jul 2020, 12:30 PM</td>
-                                    <td class="d-flex justify-content-end align-items-center"> <span
-                                            class="fa fa-long-arrow-up mr-1"></span> $52.9 </td>
-                                </tr>
-                                <tr>
-                                    <td scope="row"> <span class="fa fa-bed mr-1"></span> Hotel Leela Palace </td>
-                                    <td><span class="fa fa-cc-mastercard"></span></td>
-                                    <td class="text-muted">11 Jul 2020, 2:00 PM</td>
-                                    <td class="d-flex justify-content-end align-items-center"> <span
-                                            class="fa fa-long-arrow-up mr-1"></span> $18.9 </td>
-                                </tr>
-                                <tr>
-                                    <td scope="row"> <span class="fa fa-exchange mr-1"></span> Monthly Salary </td>
+                                    <td scope="row"><a href="{{ route('chitietdonhang',$transaction->id) }}"> <span class="fa fa-briefcase mr-1"></span> {{ $transaction->id }}</a> </td>
                                     <td><span class="fa fa-cc-visa"></span></td>
-                                    <td class="text-muted">10 Jul 2020, 8:30 PM</td>
-                                    <td class="d-flex justify-content-end align-items-center"> <span
-                                            class="fa fa-long-arrow-down mr-1"></span> $9,765.00 </td>
+                                    <td class="text-muted">{{ $transaction->created_at }}</td>
+                                    <td class="d-flex justify-content  mr-1 align-items-center"> <span
+                                            class="fa fa-long-arrow-up mr-1"></span>  {{  number_format($transaction->tr_total , 0, ',', ',') 
+                   
+                                          }}đ </td>
                                 </tr>
-                                <tr>
-                                    <td scope="row"> <span class="fa fa-exchange mr-1"></span> Xbox Purchase </td>
-                                    <td><span class="fa fa-cc-mastercard"></span></td>
-                                    <td class="text-muted">12 May 2020, 4:30 PM</td>
-                                    <td class="d-flex justify-content-end align-items-center"> <span
-                                            class="fa fa-long-arrow-up mr-1"></span> $198.90 </td>
-                                </tr>
-                                <tr>
-                                    <td scope="row"> <span class="fa fa-cutlery mr-1"></span> Dinner Party </td>
-                                    <td><span class="fa fa-cc-visa"></span></td>
-                                    <td class="text-muted">11 May 2020, 5:30 PM</td>
-                                    <td class="d-flex justify-content-end align-items-center"> <span
-                                            class="fa fa-long-arrow-up mr-1"></span> $12.90 </td>
-                                </tr>
-                                <tr>
-                                    <td scope="row"> <span class="fa fa-briefcase mr-1"></span> Nandini Hills Ride </td>
-                                    <td><span class="fa fa-cc-mastercard"></span></td>
-                                    <td class="text-muted">10 May 2020, 01:30 PM</td>
-                                    <td class="d-flex justify-content-end align-items-center"> <span
-                                            class="fa fa-long-arrow-up mr-1"></span> $97.9 </td>
-                                </tr>
-                                <tr>
-                                    <td scope="row"> <span class="fa fa-briefcase mr-1"></span> Goa Beach Party </td>
-                                    <td><span class="fa fa-cc-visa"></span></td>
-                                    <td class="text-muted">09 May 2020, 01:30 PM</td>
-                                    <td class="d-flex justify-content-end align-items-center"> <span
-                                            class="fa fa-long-arrow-up mr-1"></span> $97.9 </td>
-                                </tr>
+                                @endforeach
+                                @endif
                             </tbody>
                         </table>
                     </div>
                     <div class="d-flex justify-content-between align-items-center results"> <span
                             class="pl-md-3">Showing<b class="text-white"> 1-7 0f 200 </b> trasactions</span>
                         <div class="pt-3">
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination">
-                                    <li class="page-item disabled"> <a class="page-link" href="#" aria-label="Previous">
-                                            <span aria-hidden="true">&lt;</span> </a> </li>
-                                    <li class="page-item"> <a class="page-link" href="#" aria-label="Next"> <span
-                                                aria-hidden="true">&gt;</span> </a> </li>
-                                </ul>
-                            </nav>
+                          {{ $transactions->links('components.pagination') }}
                         </div>
                     </div>
                 </div>

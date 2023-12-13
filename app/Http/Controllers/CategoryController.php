@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -68,7 +69,12 @@ public function sortProduct(Request $request)
                 $products = Product::where([
                     'pro_category_id' => $id,
                     'pro_active' => Product::STATUS_PUBLIC
-                ])->orderBy('id','DESC')->paginate(9);
+                ])
+                    ->select('products.*', DB::raw('(SELECT AVG(star) FROM table_comment WHERE id_product = products.id) AS avg_rating'))
+                    ->orderByDesc('avg_rating')
+                    ->orderBy('id', 'DESC')
+                    ->paginate(9);
+              
                 break;
             case 'price':
                 $products = Product::where([
@@ -101,9 +107,15 @@ public function sortProduct(Request $request)
                 ->paginate(9);
             break;
         case 'rating':
-            $products = Product::where('pro_active', Product::STATUS_PUBLIC)
+            $products = Product::where([
+                'pro_active' => Product::STATUS_PUBLIC
+            ])
+                ->select('products.*', DB::raw('(SELECT AVG(star) FROM table_comment WHERE id_product = products.id) AS avg_rating'))
+                ->orderBy('avg_rating', 'DESC')
                 ->orderBy('id', 'DESC')
                 ->paginate(9);
+
+      
             break;
         case 'price':
             $products = Product::where('pro_active', Product::STATUS_PUBLIC)

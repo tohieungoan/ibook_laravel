@@ -32,11 +32,10 @@ Route::group(['namespace'=> 'Auth'], function () {
 
 });
 Route::get('quen-mat-khau',[App\Http\Controllers\Auth\ResetPasswordController::class, 'forgetpassword'])->name('forget.password');
-Route::post('quen-mat-khau', [App\Http\Controllers\Auth\ResetPasswordController::class, 'sendMail']);
+Route::post('quen-mat-khau', [App\Http\Controllers\Auth\ResetPasswordController::class, 'sendMail'])->name('sendmail');
 
-use App\Http\Controllers\Auth\ResetPasswordController;
 
-Route::get('mat-khau-moi', [ResetPasswordController::class, 'changepa'])->name('mat-khau-moi');
+Route::get('mat-khau-moi', [App\Http\Controllers\Auth\ResetPasswordController::class, 'changepa'])->name('mat-khau-moi');
 
 Route::post('mat-khau-moi/{token}', [App\Http\Controllers\Auth\ResetPasswordController::class, 'reset'])->name('mat-khau-moi.post');
 
@@ -86,6 +85,8 @@ Route::group(['prefix' => 'gio-hang', 'middleware' => 'CheckLoginUser'], functio
 
     });
 
+
+
 });
 Route::get('payment-successful', [App\Http\Controllers\ShoppingCartController::class, 'showpayment']);
 
@@ -128,4 +129,9 @@ Route::get('/DeleteAccount' , [App\Http\Controllers\AccountManager::class, 'dele
 Route::post('/quanlytaikhoan',[App\Http\Controllers\AccountManager::class, 'saveprofile'])->name('saveprofile');
 
 Route::post('/post-comment',[App\Http\Controllers\CommentController::class, 'postcomment'])->name('postcomment');
+Route::post('/checkvoucher',[App\Http\Controllers\ShoppingCartController::class, 'checkvoucher'])->name('checkvoucher');
+
 Route::get('/post-comment',[App\Http\Controllers\CommentController::class, 'getcomment']);
+
+Route::get('/checkdonhang/{action}',[App\Http\Controllers\lichsudonController::class, 'checkdonhang'])->name('checkdonhang');
+Route::get('/chitietdonhang/{id}',[App\Http\Controllers\lichsudonController::class, 'chitietdonhang'])->name('chitietdonhang');

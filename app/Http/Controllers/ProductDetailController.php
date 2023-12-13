@@ -23,14 +23,44 @@ class ProductDetailController extends Controller
         $profile = null;
         if($id = array_pop($url)){
             $productDetail = Product::where('pro_active',Product::STATUS_PUBLIC)->FIND($id); 
+            $star = 0;
+            if ($productDetail) {
+                $comments2 = DB::table('table_comment as comment')
+                ->join('products', 'comment.id_product', '=', 'products.id')
+                ->select('comment.star')
+                ->where('comment.id_product', $productDetail->id)
+                ->get();
+            
+                // Tính tổng số sao đánh giá
+                $star = $comments2->sum('star');
+                // Lấy số lượng đánh giá
+                $commentCount = $comments2->count();
+                if($commentCount!=0){
+                    $star = $star / $commentCount;
+                }
+               
+            
+                // Hiển thị thông tin số sao và số lượng đánh giá
+    
+            } else {
+
+
+
+            }
+
+
+
             $viewData = [
-                'productDetail' => $productDetail
+                'productDetail' => $productDetail,
+                'star'=>$star
             ];
             // $comments = DB::table('table_comment')
             // ->join('profile', 'profile.id_account', '=', 'table_comment.id_account')
             // ->select('profile.name', 'profile.avatar', 'table_comment.star', 'table_comment.content', 'table_comment.created_at')
             // ->where('table_comment.id_product', $id)
             // ->get();
+
+
             $comments = DB::table('table_comment')
             ->join('profile', 'profile.id_account', '=', 'table_comment.id_account')
             ->select('profile.name', 'profile.avatar', 'table_comment.star', 'table_comment.content', 'table_comment.created_at', DB::raw('COUNT(*) as comment_count'))

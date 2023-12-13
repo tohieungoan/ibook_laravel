@@ -90,7 +90,7 @@
 @csrf
 <input type="hidden" name="productsWithInfo" value="{{ json_encode($productsWithInfo) }}">
 
-<input type="hidden" name="totalafftercoupon" value="{{$total+($total*0.1)}}">
+<input type="hidden" id="totalafftercoupon" name="totalafftercoupon" value="">
 
 <button type="submit" class="btn btn-primary float-md-right">Đặt hàng<i class="fa fa-chevron-right"></i></button>
 
@@ -109,17 +109,24 @@
     <aside class="col-md-3">
       <div class="card mb-3">
         <div class="card-body">
-        <form>
-          <div class="form-group">
-            <label>Have coupon?</label>
-            <div class="input-group">
-              <input type="text" class="form-control" name="" placeholder="Coupon code">
-              <span class="input-group-append"> 
-                <button class="btn btn-primary">Apply</button>
-              </span>
+    
+
+
+          <form id="vouchertForm" action="{{ route('checkvoucher') }}" method="POST">
+            @csrf
+            <div class="form-group">
+              <label>Have coupon?</label>
+              <div class="input-group">
+                <input type="text" class="form-control" name="coupon_code" placeholder="Coupon code">
+                <span class="input-group-append"> 
+                  <input type="submit" class="btn btn-primary" value="Áp dụng">
+                </span>
+              </div>
             </div>
-          </div>
-        </form>
+          </form>
+
+
+
         </div> <!-- card-body.// -->
       </div>  <!-- card .// -->
       <div class="card">
@@ -133,13 +140,11 @@
             </dl>
             <dl class="dlist-align">
               <dt>Giảm giá:</dt>
-              <dd class="text-right"></dd>
+              <dd class="text-right" id="giagiam"></dd>
             </dl>
             <dl class="dlist-align">
               <dt>Tiền thanh toán (cả thuế):</dt>
-              <dd class="text-right  h5"><strong> {{  number_format($total+($total*0.1) , 0, ',', ',') 
-                   
-              }}</strong></dd>
+              <dd class="text-right h5" id="totalPayment" name="tiensaucuoi" value="{{ $total + ($total * 0.1) }}"><strong>{{ number_format($total + ($total * 0.1), 0, ',', ',') }}</strong></dd>
             </dl>
             <hr>
             <p class="text-center mb-3">
@@ -154,5 +159,42 @@
   </div> 
   </section>
 </div>
-		
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('#vouchertForm').submit(function(e) {
+      e.preventDefault(); // Ngăn chặn hành vi mặc định của sự kiện submit
+
+    
+      var couponCode = $('input[name="coupon_code"]').val().replace(/,/g, '');
+
+      $.post(
+        "{{ route('checkvoucher') }}",
+        {
+          coupon_code: couponCode, // Sửa key thành 'coupon_code'
+          _token: '{{ csrf_token() }}'
+        },
+        function(response) {
+      
+            var responseValue = parseInt(response.value); // Sửa lỗi chính tả pareInt thành parseInt
+          
+            var total = parseInt($('#totalPayment').attr('value'));
+          
+
+            var newTotal = total - ((total * responseValue) / 100);
+            $('#totalafftercoupon').val(newTotal);
+            var giagiam = total - newTotal;
+            $('#giagiam').text(giagiam.toLocaleString('vi-VN', { style: 'decimal', maximumFractionDigits: 0 }));
+
+            var formattedPaymentValue = newTotal.toLocaleString('vi-VN', { style: 'decimal', maximumFractionDigits: 0 });
+            $('#totalPayment').html("<strong>" + formattedPaymentValue + "</strong>");
+          
+        }
+      ).fail(function(xhr, status, error) {
+        console.error(error);
+      });
+    });
+  });
+</script>
+
 @stop

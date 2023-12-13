@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Models\Cart;
 use App\Models\Transaction;
 use App\Models\Order;
+use App\Models\Voucher;
+
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -226,7 +228,7 @@ public function taodonhang (Request $request){
     $vnp_ResponseCode = $request->input('vnp_ResponseCode');
     $vnp_TransactionStatus = $request->input('vnp_TransactionStatus');
     
-    $transaction = Transaction::select('tr_note', 'tr_address', 'tr_phone' , 'tr_total')
+    $transaction = Transaction::select('tr_note', 'tr_address', 'tr_phone' , 'tr_total','tr_status')
         ->where('id', $idtrans)
         ->first();
         $product = DB::table('products')
@@ -239,7 +241,7 @@ public function taodonhang (Request $request){
 
     if ($vnp_ResponseCode == '00' && $vnp_TransactionStatus == '00') {
         Transaction::where('id', $idtrans)
-        ->update(['tr_status' => '3']);
+        ->update(['tr_status' => '1']);
       
 return view('shopping.return')->with('paymentsuccess', 'Thanh toán thành công.')->with('vnp_Amount', $vnp_Amount)->with('transaction',$transaction)->with('product',$product);
 
@@ -249,5 +251,19 @@ return view('shopping.return')->with('paymentsuccess', 'Thanh toán thành công
         return view('shopping.return')->with('paymentfail', 'Thanh toán thất bại.')->with('vnp_Amount', $vnp_Amount)->with('transaction',$transaction)->with('product',$product);
 
     }
+    }
+    public function checkvoucher(Request $request){
+        $couponCode = $request->coupon_code;
+        $voucherValue = 0;
+        $voucher = Voucher::where('voucher', $couponCode)->first();
+    
+        if ($voucher) {
+            $voucherValue = $voucher->value;
+           
+        } else {
+           $voucherValue = 0;
+        }
+
+        return response()->json(['value' => $voucherValue]);
     }
 }

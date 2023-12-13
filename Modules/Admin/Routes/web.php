@@ -21,7 +21,8 @@ Route::prefix('admin')->group(function() {
         route::get('/update/{id}' ,'AdminCategoryController@edit')->name('admin.get.edit.category');
         route::post('/update/{id}' ,'AdminCategoryController@update');
         route::get('/{action}/{id}' ,'AdminCategoryController@action')->name('admin.get.action.category');
-
+        route::get('/data','AdminController@getdata')->name('admin.get.data');
+        
     }
 );
 
@@ -49,7 +50,7 @@ route::group(['prefix'=>'article'], function() {
 //quan li don hang
 route::group(['prefix'=>'transaction'], function() {
     route::get('/' ,'AdminTransactionController@index')->name('admin.get.list.transaction');
-
+    route::get('/{id}' ,'AdminTransactionController@action')->name('admin.get.action.transaction');
 
 }
 );

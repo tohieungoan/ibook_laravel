@@ -17,6 +17,28 @@
 <link href="{{ asset('css2/bill.css') }}" rel="stylesheet" type="text/css"/>
 
 <!------ Include the above in your HEAD tag ---------->
+<div class="row cart-header">
+    <?php
+    $mes='';
+        if($transaction['tr_status']==1){
+            $mes ='đang xử lý';
+        }
+        else if($transaction['tr_status']==2){
+            $mes ='đang giao hàng';
+
+        }
+        else if($transaction['tr_status']==3){
+            $mes ='đã nhận hàng';
+
+        }
+        else 
+        {
+            $mes ='đã hủy';
+
+        }
+        ?>
+    <h2>Tình trạng đơn hàng : {{ $mes }}</h2>
+</div>
 
 <div class="container wrapper">
             <div class="row cart-head">
@@ -70,7 +92,7 @@
                             <div class="form-group">
                                 <div class="col-xs-12">
                                     <strong>Số tiền:</strong>
-                                    <div class="pull-right"><span>    {{  number_format( $vnp_Amount, 0, ',', ',') 
+                                    <div class="pull-right"><span>    {{  number_format( $transaction->tr_total, 0, ',', ',') 
                    
                                     }}đ</span></div>
                                 </div>

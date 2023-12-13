@@ -16,7 +16,7 @@ class AdminCategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::select('id','c_name','c_title_seo','c_active')->get();
+        $categories = Category::select('id','c_name','c_title_seo','c_active')->paginate(5);;
         $viewData = [
             'categories'=> $categories
         ];
@@ -74,7 +74,7 @@ class AdminCategoryController extends Controller
                  
                     break;
                     case 'active':
-                        $category->c_active = $category->c_active ? 0 : 1;
+                        $category->active = $category->active ? 0 : 1;
                         $category->save();
                         break;
             }
